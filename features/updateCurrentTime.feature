@@ -1,11 +1,21 @@
 Feature: Update the current time
 
-    Update the current time every 10 seconds
+  Update the current time every 10 seconds
 
-    Scenario: The current time has already been successfully updated
-      Given there is no error loading the time
-      And the time has been loaded successfully
-      When 10 seconds have past
-      Then The current time is displayed
+  Scenario Outline: Update the time after the website has already been loaded
+    Given The website has already been loaded
+    When <second> seconds have passed since the initial page load
+    Then The time or the error message should have been updated <number> times 
+
+    Examples:
+      | second | number |
+      | 10     | 2      |
+      | 30     | 4      |
+      | 50     | 6      |
+
+
+
+
+
 
 
