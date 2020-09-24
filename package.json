@@ -22,7 +22,7 @@
   },
   "scripts": {
     "prepublish": "typings install",
-    "test": "gulp test",
+    "test": "cucumber-js",
     "e2e": "gulp serve e2e"
   },
   "devDependencies": {
