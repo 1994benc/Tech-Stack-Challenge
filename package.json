@@ -28,6 +28,7 @@
   "devDependencies": {
     "@cucumber/cucumber": "^7.0.0-rc.0",
     "aurelia-bundler": "^0.7.0",
+    "aurelia-fetch-client": "^1.8.2",
     "aurelia-protractor-plugin": "^1.0.0",
     "aurelia-tools": "^1.0.0",
     "browser-sync": "^2.17.5",
@@ -55,6 +56,7 @@
     "protractor": "^4.0.10",
     "require-dir": "^0.3.2",
     "run-sequence": "^1.2.2",
+    "sinon": "^9.0.3",
     "systemjs": "0.19.40",
     "tslint": "^3.15.1",
     "typescript": "^2.3.1",
@@ -77,6 +79,7 @@
       "aurelia-templating-binding": "npm:aurelia-templating-binding@^1.0.0",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0",
       "aurelia-templating-router": "npm:aurelia-templating-router@^1.0.0",
+      "axios": "npm:axios@^0.20.0",
       "bluebird": "npm:bluebird@3.4.1",
       "bootstrap": "github:twbs/bootstrap@^3.3.6",
       "fetch": "github:github/fetch@^1.0.0",
