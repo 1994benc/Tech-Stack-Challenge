@@ -4,28 +4,6 @@ const axios = require('axios');
 const sinon = require('sinon')
 const moment = require('moment')
 
-/** ------------------------------------
- * ---------BUSINESS LOGIC PLACEHOLDER---
- * ------------------------------------*/
-// TODO: Move into business logic
-// TODO: Use RxJS
-function fetchCurrentTime() {
-  return new Promise((resolve, reject) => axios.get('http://worldtimeapi.org/api/ip').then(function (response) {
-    resolve(createTimeString(new Date(response.data.datetime)))
-  })
-    .catch(function (error) {
-      reject(createErrorMessage())
-    }));
-}
-// TODO: Move into business logic
-function createTimeString(dateObject) {
-  return moment(dateObject).format("HH:mm:ss")
-}
-
-// TODO: Move into business logic
-function createErrorMessage() {
-  return "Error - back soon!"
-}
 
 /** ----------------------------
  * ---------STEP--DEFINITIONS---
