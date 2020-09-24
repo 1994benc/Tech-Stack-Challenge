@@ -1,6 +1,5 @@
 const assert = require('assert');
 const { Given, When, Then, After, AfterAll } = require('@cucumber/cucumber');
-const axios = require('axios');
 const sinon = require('sinon')
 var FakeTimers = require("@sinonjs/fake-timers");
 
@@ -22,7 +21,6 @@ When('{int} seconds have passed since the initial page load', async function (se
   this.clock.tick(second * 1000)
   this.clock.uninstall();
 });
-
 
 Then('The time or the error message should have been updated {int} times', function (expectedCount) {
   // Count the number of function calls
