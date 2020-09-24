@@ -6,7 +6,7 @@ const moment = require('moment')
 
 /** ------------------------------------
  * ---------BUSINESS LOGIC PLACEHOLDER---
- * ------------------------------------*/ 
+ * ------------------------------------*/
 // TODO: Move into business logic
 // TODO: Use RxJS
 function fetchCurrentTime() {
@@ -24,12 +24,12 @@ function createTimeString(dateObject) {
 
 // TODO: Move into business logic
 function createErrorMessage() {
-    return "Error - back soon!"
+  return "Error - back soon!"
 }
 
 /** ----------------------------
  * ---------STEP--DEFINITIONS---
- * -----------------------------*/ 
+ * -----------------------------*/
 
 Given('There is no error loading the current time', function () {
   const fakeResponse = {
@@ -48,7 +48,7 @@ When('A user loads the website', async function () {
   try {
     const timeData = await fetchCurrentTime()
     this.fetchedTimeData = timeData
-  } catch (error) { 
+  } catch (error) {
     this.errorMessage = error
   }
 });
@@ -68,5 +68,13 @@ Given('There is an error loading the current time', function () {
 
 Then('The error message is displayed', function () {
   const actualErrorMessage = "Error - back soon!"
+  this.getStubSandbox.restore()
   return assert.strictEqual(actualErrorMessage, this.errorMessage);
 });
+
+
+After(function () {
+  if (this.getStubSandbox) {
+    this.getStubSandbox.restore()
+  }
+})
