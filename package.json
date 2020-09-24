@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.0.0-rc.0",
+    "@types/moment": "^2.13.0",
     "aurelia-bundler": "^0.7.0",
     "aurelia-fetch-client": "^1.8.2",
     "aurelia-protractor-plugin": "^1.0.0",
@@ -52,6 +53,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-systemjs": "^0.15.0",
+    "moment": "^2.29.0",
     "object.assign": "^4.0.4",
     "protractor": "^4.0.10",
     "require-dir": "^0.3.2",
@@ -85,6 +87,7 @@
       "fetch": "github:github/fetch@^1.0.0",
       "font-awesome": "npm:font-awesome@4.6.3",
       "jquery": "npm:jquery@^2.2.4",
+      "moment": "npm:moment@^2.29.0",
       "rxjs": "npm:rxjs@^6.6.3",
       "text": "github:systemjs/plugin-text@^0.0.8"
     },
