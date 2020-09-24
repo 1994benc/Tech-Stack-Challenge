@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.0.0-rc.0",
+    "@sinonjs/fake-timers": "^6.0.1",
     "@types/moment": "^2.13.0",
     "aurelia-bundler": "^0.7.0",
     "aurelia-fetch-client": "^1.8.2",
