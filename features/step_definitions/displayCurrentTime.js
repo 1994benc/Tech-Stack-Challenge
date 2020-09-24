@@ -17,7 +17,6 @@ Given('There is no error loading the current time', function () {
       datetime: "2020-09-24T10:23:10.331886+01:00"
     }
   }
-  // 10 seconds later is '2020-09-24T10:23:20.331886+01:00'
   this.getStubSandbox = sinon.createSandbox();
   this.getStubSandbox.stub(axios, "get").resolves(fakeResponse)
 });
