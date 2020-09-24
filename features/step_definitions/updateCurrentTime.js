@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Given, When, Then, After, AfterAll } = require('@cucumber/cucumber');
+const { Given, When, Then, After } = require('@cucumber/cucumber');
 const sinon = require('sinon')
 var FakeTimers = require("@sinonjs/fake-timers");
 
