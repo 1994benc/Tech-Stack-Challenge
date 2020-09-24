@@ -6,3 +6,8 @@ Feature: Display current time
       Given There is no error loading the current time
       When A user loads the website
       Then The current time is displayed
+
+    Scenario: Something goes wrong on the website
+      Given There is an error loading the current time
+      When A user loads the website
+      Then The error message is displayed
