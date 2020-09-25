@@ -127,6 +127,13 @@ div.au-stagger {
   border: 2px #FFF solid;
 }
 
+.time-display {
+  text-align: center;
+  font-size: 12em;
+}
+.time-display-title {
+  text-align: center;
+}
 /* animation definitions */
 @-webkit-keyframes fadeInRight {
   0% {
