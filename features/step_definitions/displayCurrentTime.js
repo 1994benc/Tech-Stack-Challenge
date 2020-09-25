@@ -23,7 +23,7 @@ Given('There is no error loading the current time', function () {
 
 When('A user loads the website', async function () {
   try {
-    const timeData = await fetchCurrentTime()
+    const timeData = await DisplayTime.fetchCurrentTime()
     this.fetchedTimeData = timeData
   } catch (error) {
     this.errorMessage = error
