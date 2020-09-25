@@ -31,7 +31,7 @@ When('A user loads the website', async function () {
 });
 
 Then('The current time is displayed', function () {
-  const actualCurrentTime = createTimeString(new Date('2020-09-24T10:23:10.331886+01:00'))
+  const actualCurrentTime = DisplayTime.createTimeString(new Date('2020-09-24T10:23:10.331886+01:00'))
   const fetchedCurrentTime = this.fetchedTimeData
   this.getStubSandbox.restore()
   return assert.strictEqual(actualCurrentTime, fetchedCurrentTime);
