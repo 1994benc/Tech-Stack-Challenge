@@ -49,45 +49,49 @@ Given('There is no error loading the current time', function () {
         data: {
             abbreviation: 'BST',
             client_ip: '000.00.000.00',
-            datetime: "2020-09-24T10:23:10.331886+01:00"
-        }
+            datetime: '2020-09-24T10:23:10.331886+01:00',
+        },
     };
     this.getStubSandbox = sinon.createSandbox();
-    this.getStubSandbox.stub(axios_1.default, "get").resolves(fakeResponse);
+    this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
 });
 When('A user loads the website', function () {
     return __awaiter(this, void 0, void 0, function () {
-        var displayTime;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    displayTime = new display_time_1.DisplayTime();
-                    return [4 /*yield*/, displayTime.attached()];
+                    this.displayTime = new display_time_1.DisplayTime();
+                    return [4 /*yield*/, this.displayTime.attached()];
                 case 1:
                     _a.sent();
-                    this.displayMessage = displayTime.displayMessage;
+                    this.displayMessage = this.displayTime.displayMessage;
                     return [2 /*return*/];
             }
         });
     });
 });
 Then('The current time is displayed', function () {
-    var actualCurrentTime = "10:23:10";
+    var actualCurrentTime = '10:23:10';
     this.getStubSandbox.restore();
     return assert.strictEqual(actualCurrentTime, this.displayMessage);
 });
 Given('There is an error loading the current time', function () {
-    // Stub an error 
+    // Stub an error
     this.getStubSandbox = sinon.createSandbox();
-    this.getStubSandbox.stub(axios_1.default, "get").rejects({ errorCode: 404, message: "Something went wrong" });
+    this.getStubSandbox
+        .stub(axios_1.default, 'get')
+        .rejects({ errorCode: 404, message: 'Something went wrong' });
 });
 Then('The error message is displayed', function () {
-    var actualErrorMessage = "Error - back soon!";
+    var actualErrorMessage = 'Error - back soon!';
     this.getStubSandbox.restore();
     return assert.strictEqual(actualErrorMessage, this.displayMessage);
 });
 After(function () {
     if (this.getStubSandbox) {
         this.getStubSandbox.restore();
+    }
+    if (this.displayTime) {
+        this.displayTime.detached();
     }
 });

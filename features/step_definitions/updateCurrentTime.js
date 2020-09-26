@@ -40,21 +40,20 @@ var display_time_1 = require("../../src/display-time/display-time");
 var assert = require("assert");
 var _a = require('@cucumber/cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
 var sinon = require("sinon");
-var FakeTimers = require("@sinonjs/fake-timers");
+var FakeTimers = require('@sinonjs/fake-timers');
 /** ----------------------------
  * ---------STEP--DEFINITIONS---
  * -----------------------------*/
 Given('The website has already been loaded', function () {
     return __awaiter(this, void 0, void 0, function () {
-        var displayTime;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     this.countSandbox = sinon.createSandbox();
                     this.clock = FakeTimers.install();
-                    displayTime = new display_time_1.DisplayTime();
-                    this.getSpy = this.countSandbox.spy(displayTime, "fetchCurrentTime");
-                    return [4 /*yield*/, displayTime.attached()];
+                    this.displayTime = new display_time_1.DisplayTime();
+                    this.getSpy = this.countSandbox.spy(this.displayTime, 'fetchCurrentTime');
+                    return [4 /*yield*/, this.displayTime.attached()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -78,5 +77,8 @@ Then('The time or the error message should have been updated {int} times', funct
 After(function () {
     if (this.countSandbox) {
         this.countSandbox.restore();
+    }
+    if (this.displayTime) {
+        this.displayTime.detached();
     }
 });
