@@ -1,12 +1,11 @@
-import axios, { AxiosResponse } from 'axios'
 import * as moment from 'moment'
-import { from, Subscription } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Subscription } from 'rxjs'
+import { Time } from './time-model'
 
 export class DisplayTime {
   private _displayMessage: string
   private _interval: NodeJS.Timer
-  _rxSub: Subscription
+  private _rxSub: Subscription
   private _displayMode: 'night' | 'day'
 
   public get displayMessage(): string {
@@ -23,9 +22,9 @@ export class DisplayTime {
   }
 
   public fetchCurrentTime(): void {
-    const APIPath = 'http://worldtimeapi.org/api/ip'
-    const observable = from(axios.get(APIPath))
-    this._rxSub = observable.subscribe(
+    const time = new Time()
+    const timeObservable = time.current()
+    this._rxSub = timeObservable.subscribe(
       (response) => {
         const currentDateTime = new Date(response.data.datetime)
         const timeString = this.createTimeString(currentDateTime)
@@ -67,6 +66,13 @@ export class DisplayTime {
   }
 
   private _changeDisplayStyle(mode: 'day' | 'night'): void {
+
+    // Check if the code is running in the browser environment
+    if (typeof window === "undefined" || typeof window.document !== "undefined") {
+      return
+    }
+
+    // Change the html's styles according to the display mode
     if (mode === 'night') {
       document.documentElement.style.setProperty(
         `--background-color`,

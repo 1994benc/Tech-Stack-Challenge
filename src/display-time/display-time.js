@@ -37,9 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DisplayTime = void 0;
-var axios_1 = require("axios");
 var moment = require("moment");
-var rxjs_1 = require("rxjs");
+var time_model_1 = require("./time-model");
 var DisplayTime = /** @class */ (function () {
     function DisplayTime() {
     }
@@ -72,13 +71,14 @@ var DisplayTime = /** @class */ (function () {
     };
     DisplayTime.prototype.fetchCurrentTime = function () {
         var _this = this;
-        var APIPath = 'http://worldtimeapi.org/api/ip';
-        var observable = rxjs_1.from(axios_1.default.get(APIPath));
-        this._rxSub = observable.subscribe(function (response) {
+        var time = new time_model_1.Time();
+        var timeObservable = time.current();
+        this._rxSub = timeObservable.subscribe(function (response) {
             var currentDateTime = new Date(response.data.datetime);
             var timeString = _this.createTimeString(currentDateTime);
             _this._displayMessage = timeString;
             _this._displayMode = _this._switchDisplayMode(currentDateTime);
+            _this._changeDisplayStyle(_this._displayMode);
         }, function (error) {
             var errorMessage = _this.createErrorMessage();
             _this._displayMessage = errorMessage;
@@ -106,6 +106,22 @@ var DisplayTime = /** @class */ (function () {
         else {
             // the default display mode is "day"
             return 'day';
+        }
+    };
+    DisplayTime.prototype._changeDisplayStyle = function (mode) {
+        // Check if the code is running in the browser environment
+        if (typeof window === "undefined" || typeof window.document !== "undefined") {
+            return;
+        }
+        // Change the html's styles according to the display mode
+        if (mode === 'night') {
+            document.documentElement.style.setProperty("--background-color", 'var(--night-background-color)');
+            document.documentElement.style.setProperty("--text-color", 'var(--night-text-color)');
+        }
+        else {
+            // the default display mode is "day"
+            document.documentElement.style.setProperty("--background-color", 'var(--day-background-color)');
+            document.documentElement.style.setProperty("--text-color", 'var(--day-text-color)');
         }
     };
     DisplayTime.prototype.detached = function () {
