@@ -45,22 +45,30 @@ var display_time_1 = require("../../src/display-time/display-time");
  * ---------STEP--DEFINITIONS---
  * -----------------------------*/
 Given('the current hour is {int}', function (hour) {
+    var date = new Date("2020-09-24T00:00:00.331886+01:00");
+    date.setHours(hour);
     var fakeResponse = {
         data: {
             abbreviation: 'BST',
             client_ip: '000.00.000.00',
-            datetime: "2020-09-24T" + hour + ":00:00.331886+01:00",
+            datetime: date.toISOString(),
         },
     };
+    console.log(fakeResponse);
     this.getStubSandbox = sinon.createSandbox();
     this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
 });
 When('the time now is loaded', function () {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            this.displayTime = new display_time_1.DisplayTime();
-            this.displayTime.attached();
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    this.displayTime = new display_time_1.DisplayTime();
+                    return [4 /*yield*/, this.displayTime.attached()];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
         });
     });
 });

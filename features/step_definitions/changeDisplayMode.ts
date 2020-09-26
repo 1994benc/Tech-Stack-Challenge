@@ -8,11 +8,13 @@ import { DisplayTime } from '../../src/display-time/display-time'
  * -----------------------------*/
 
 Given('the current hour is {int}', function (hour:number) {
+  let date = new Date(`2020-09-24T00:00:00.331886+01:00`)
+  date.setHours(hour)
   const fakeResponse = {
     data: {
       abbreviation: 'BST',
       client_ip: '000.00.000.00',
-      datetime: `2020-09-24T${hour}:00:00.331886+01:00`,
+      datetime: date.toISOString(),
     },
   }
   this.getStubSandbox = sinon.createSandbox()
@@ -21,7 +23,7 @@ Given('the current hour is {int}', function (hour:number) {
 
 When('the time now is loaded', async function () {
   this.displayTime = new DisplayTime()
-  this.displayTime.attached()
+  await this.displayTime.attached()
 })
 
 Then("the website's display mode is switched to the {string} mode", function (
