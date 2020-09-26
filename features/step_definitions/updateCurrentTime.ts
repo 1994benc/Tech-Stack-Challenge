@@ -17,7 +17,7 @@ Given('The website has already been loaded', async function () {
 })
 
 When('{int} seconds have passed since the initial page load', async function (
-  second,
+  second: number,
 ) {
   this.clock.tick(second * 1000)
   this.clock.uninstall()
@@ -25,7 +25,7 @@ When('{int} seconds have passed since the initial page load', async function (
 
 Then(
   'The time or the error message should have been updated {int} times',
-  function (expectedCount) {
+  function (expectedCount: number) {
     // Count the number of function calls
     assert.strictEqual(this.getSpy.callCount, expectedCount)
   },
