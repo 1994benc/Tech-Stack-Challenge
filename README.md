@@ -40,6 +40,8 @@ To run the app, follow these steps.
 > The Skeleton App uses [BrowserSync](http://www.browsersync.io/) for automated page refreshes on code/markup changes concurrently across multiple browsers. If you prefer to disable the mirroring feature set the [ghostMode option](http://www.browsersync.io/docs/options/#option-ghostMode) to false
 
 ## Running the tests
+The tests are written as feature files using gherkin syntax and run with Cucumber-JS in TypeScript. Test the application with the command below:
+
 ```shell
   npm test
 ```
