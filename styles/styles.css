@@ -1,8 +1,8 @@
 
 :root {
   --day-background-color: #ffffff;
-  --day-text-color:#271381;
-  --night-background-color: #271381;
+  --day-text-color:#0b071b;
+  --night-background-color: #0b071b;
   --night-text-color: #ffffff;
   --background-color: var(--day-background-color);
   --text-color: var(--day-text-color);
