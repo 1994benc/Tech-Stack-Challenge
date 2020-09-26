@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -13,7 +14,10 @@ System.config({
       ]
     }
   },
+
   map: {
+    "@types/axios": "npm:@types/axios@0.14.0",
+    "@types/moment": "npm:@types/moment@2.13.0",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.1",
@@ -79,6 +83,12 @@ System.config({
     },
     "github:twbs/bootstrap@3.3.7": {
       "jquery": "npm:jquery@2.2.4"
+    },
+    "npm:@types/axios@0.14.0": {
+      "axios": "npm:axios@0.20.0"
+    },
+    "npm:@types/moment@2.13.0": {
+      "moment": "npm:moment@2.29.0"
     },
     "npm:assert@1.5.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
