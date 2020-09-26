@@ -1,8 +1,11 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import * as moment from 'moment'
+import { from, Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 export class DisplayTime {
   private _displayMessage: string
+  rxSub: Observable<AxiosResponse<any>>
 
   public get displayMessage(): string {
     return this._displayMessage
@@ -12,22 +15,21 @@ export class DisplayTime {
     await this.fetchCurrentTime()
   }
 
-  public fetchCurrentTime(): Promise<string> {
+  public fetchCurrentTime(): void {
     const APIPath = 'http://worldtimeapi.org/api/ip'
-    return new Promise((resolve, reject) => {
-      axios
-        .get(APIPath)
-        .then((response) => {
-          const timeString = this.createTimeString(
-            new Date(response.data.datetime),
-          )
-          resolve(timeString)
-        })
-        .catch((error) => {
-          const errorMessage = this.createErrorMessage()
-          reject(errorMessage)
-        })
-    })
+    this.rxSub = from(axios.get(APIPath))
+    this.rxSub.subscribe(
+      (response) => {
+        const timeString = this.createTimeString(
+          new Date(response.data.datetime),
+        )
+        this._displayMessage = timeString
+      },
+      () => {
+        const errorMessage = this.createErrorMessage()
+        this._displayMessage = errorMessage
+      },
+    )
   }
 
   public createTimeString(dateObject: Date): string {
@@ -39,4 +41,6 @@ export class DisplayTime {
   }
 
   public automaticReload(): void {}
+
+  detached() {}
 }
