@@ -22,13 +22,14 @@
   },
   "scripts": {
     "prepublish": "typings install",
-    "test": "cucumber-js",
+    "test": "tsc -t es5 features/**/*.ts && cucumber-js",
     "e2e": "gulp serve e2e"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.0.0-rc.0",
     "@sinonjs/fake-timers": "^6.0.1",
     "@types/moment": "^2.13.0",
+    "@types/sinon": "^9.0.6",
     "aurelia-bundler": "^0.7.0",
     "aurelia-fetch-client": "^1.8.2",
     "aurelia-protractor-plugin": "^1.0.0",
@@ -62,13 +63,15 @@
     "sinon": "^9.0.3",
     "systemjs": "0.19.40",
     "tslint": "^3.15.1",
-    "typescript": "^2.3.1",
+    "typescript": "^3.9.7",
     "typings": "^2.0.0",
     "vinyl-paths": "^2.1.0",
     "yargs": "^6.3.0"
   },
   "jspm": {
     "dependencies": {
+      "@types/axios": "npm:@types/axios@^0.14.0",
+      "@types/moment": "npm:@types/moment@^2.13.0",
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0",
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@^1.0.0",
@@ -94,5 +97,7 @@
     },
     "devDependencies": {}
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/axios": "^0.14.0"
+  }
 }
