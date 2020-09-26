@@ -50,6 +50,13 @@ var DisplayTime = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(DisplayTime.prototype, "displayMode", {
+        get: function () {
+            return this._displayMode;
+        },
+        enumerable: false,
+        configurable: true
+    });
     DisplayTime.prototype.attached = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -68,9 +75,11 @@ var DisplayTime = /** @class */ (function () {
         var APIPath = 'http://worldtimeapi.org/api/ip';
         var observable = rxjs_1.from(axios_1.default.get(APIPath));
         this._rxSub = observable.subscribe(function (response) {
-            var timeString = _this.createTimeString(new Date(response.data.datetime));
+            var currentDateTime = new Date(response.data.datetime);
+            var timeString = _this.createTimeString(currentDateTime);
             _this._displayMessage = timeString;
-        }, function () {
+            _this._displayMode = _this._switchDisplayMode(currentDateTime);
+        }, function (error) {
             var errorMessage = _this.createErrorMessage();
             _this._displayMessage = errorMessage;
         });
@@ -88,6 +97,16 @@ var DisplayTime = /** @class */ (function () {
         this._interval = setInterval(function () {
             _this.fetchCurrentTime();
         }, seconds * 1000);
+    };
+    DisplayTime.prototype._switchDisplayMode = function (time) {
+        var hour = time.getHours();
+        if (hour < 6 || hour >= 18) {
+            return 'night';
+        }
+        else {
+            // the default display mode is "day"
+            return 'day';
+        }
     };
     DisplayTime.prototype.detached = function () {
         this._rxSub.unsubscribe();

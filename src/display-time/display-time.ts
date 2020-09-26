@@ -7,9 +7,14 @@ export class DisplayTime {
   private _displayMessage: string
   private _interval: NodeJS.Timer
   _rxSub: Subscription
+  private _displayMode: 'night' | 'day'
 
   public get displayMessage(): string {
     return this._displayMessage
+  }
+
+  public get displayMode(): 'night' | 'day' {
+    return this._displayMode
   }
 
   async attached() {
@@ -22,10 +27,10 @@ export class DisplayTime {
     const observable = from(axios.get(APIPath))
     this._rxSub = observable.subscribe(
       (response) => {
-        const timeString = this.createTimeString(
-          new Date(response.data.datetime),
-        )
+        const currentDateTime = new Date(response.data.datetime)
+        const timeString = this.createTimeString(currentDateTime)
         this._displayMessage = timeString
+        this._displayMode = this._switchDisplayMode(currentDateTime)
       },
       (error) => {
         const errorMessage = this.createErrorMessage()
@@ -48,6 +53,16 @@ export class DisplayTime {
     this._interval = setInterval(() => {
       this.fetchCurrentTime()
     }, seconds * 1000)
+  }
+
+  private _switchDisplayMode(time: Date): 'night' | 'day' {
+    const hour: number = time.getHours()
+    if (hour < 6 || hour >= 18) {
+      return 'night'
+    } else {
+      // the default display mode is "day"
+      return 'day'
+    }
   }
 
   detached() {
