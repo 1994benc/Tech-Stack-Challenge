@@ -56,8 +56,7 @@ export class DisplayTime {
   private _changeDisplayStyle(mode: 'day' | 'night'): void {
     // Check if the code is running in the browser environment
     if (
-      typeof window === 'undefined' ||
-      typeof window.document !== 'undefined'
+    typeof document === 'undefined'
     ) {
       return
     }

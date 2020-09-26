@@ -42,6 +42,7 @@ var DisplayTime = /** @class */ (function () {
     function DisplayTime() {
     }
     Object.defineProperty(DisplayTime.prototype, "displayMessage", {
+        // Getters
         get: function () {
             return this._displayMessage;
         },
@@ -55,19 +56,27 @@ var DisplayTime = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    // Aurelia lifecycle method: attached
     DisplayTime.prototype.attached = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.fetchCurrentTime()];
+                    case 0: 
+                    // Fetch the current time from the API
+                    return [4 /*yield*/, this.fetchCurrentTime()
+                        // Sends request to get the current time every 10 seconds
+                    ];
                     case 1:
+                        // Fetch the current time from the API
                         _a.sent();
+                        // Sends request to get the current time every 10 seconds
                         this.automaticReload();
                         return [2 /*return*/];
                 }
             });
         });
     };
+    // Fetch the current time from the API
     DisplayTime.prototype.fetchCurrentTime = function () {
         var _this = this;
         var time = new time_model_1.Time();
@@ -83,9 +92,9 @@ var DisplayTime = /** @class */ (function () {
     DisplayTime.prototype._createErrorMessage = function () {
         return 'Error - back soon!';
     };
+    // Sends request to get the current time every 10 seconds
     DisplayTime.prototype.automaticReload = function () {
         var _this = this;
-        // Sends request to get the current time every 10 seconds
         var seconds = 10;
         this._interval = setInterval(function () {
             _this.fetchCurrentTime();
@@ -93,7 +102,7 @@ var DisplayTime = /** @class */ (function () {
     };
     DisplayTime.prototype._changeDisplayStyle = function (mode) {
         // Check if the code is running in the browser environment
-        if (typeof window === "undefined" || typeof window.document !== "undefined") {
+        if (typeof document === 'undefined') {
             return;
         }
         // Change the html's styles according to the display mode
