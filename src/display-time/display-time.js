@@ -57,6 +57,7 @@ var DisplayTime = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.fetchCurrentTime()];
                     case 1:
                         _a.sent();
+                        this.automaticReload();
                         return [2 /*return*/];
                 }
             });
@@ -65,8 +66,8 @@ var DisplayTime = /** @class */ (function () {
     DisplayTime.prototype.fetchCurrentTime = function () {
         var _this = this;
         var APIPath = 'http://worldtimeapi.org/api/ip';
-        this.rxSub = rxjs_1.from(axios_1.default.get(APIPath));
-        this.rxSub.subscribe(function (response) {
+        var observable = rxjs_1.from(axios_1.default.get(APIPath));
+        this._rxSub = observable.subscribe(function (response) {
             var timeString = _this.createTimeString(new Date(response.data.datetime));
             _this._displayMessage = timeString;
         }, function () {
@@ -80,8 +81,18 @@ var DisplayTime = /** @class */ (function () {
     DisplayTime.prototype.createErrorMessage = function () {
         return 'Error - back soon!';
     };
-    DisplayTime.prototype.automaticReload = function () { };
-    DisplayTime.prototype.detached = function () { };
+    DisplayTime.prototype.automaticReload = function () {
+        var _this = this;
+        // Sends request to get the current time every 10 seconds
+        var seconds = 10;
+        this._interval = setInterval(function () {
+            _this.fetchCurrentTime();
+        }, seconds * 1000);
+    };
+    DisplayTime.prototype.detached = function () {
+        this._rxSub.unsubscribe();
+        clearInterval(this._interval);
+    };
     return DisplayTime;
 }());
 exports.DisplayTime = DisplayTime;

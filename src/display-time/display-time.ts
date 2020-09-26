@@ -5,7 +5,8 @@ import { map } from 'rxjs/operators'
 
 export class DisplayTime {
   private _displayMessage: string
-  rxSub: Subscription
+  private _interval: NodeJS.Timer
+  _rxSub: Subscription
 
   public get displayMessage(): string {
     return this._displayMessage
@@ -13,19 +14,20 @@ export class DisplayTime {
 
   async attached() {
     await this.fetchCurrentTime()
+    this.automaticReload()
   }
 
   public fetchCurrentTime(): void {
     const APIPath = 'http://worldtimeapi.org/api/ip'
     const observable = from(axios.get(APIPath))
-    this.rxSub = observable.subscribe(
+    this._rxSub = observable.subscribe(
       (response) => {
         const timeString = this.createTimeString(
           new Date(response.data.datetime),
         )
         this._displayMessage = timeString
       },
-      () => {
+      (error) => {
         const errorMessage = this.createErrorMessage()
         this._displayMessage = errorMessage
       },
@@ -40,9 +42,16 @@ export class DisplayTime {
     return 'Error - back soon!'
   }
 
-  public automaticReload(): void {}
+  public automaticReload(): void {
+    // Sends request to get the current time every 10 seconds
+    const seconds = 10
+    this._interval = setInterval(() => {
+      this.fetchCurrentTime()
+    }, seconds * 1000)
+  }
 
   detached() {
-    this.rxSub.unsubscribe()
+    this._rxSub.unsubscribe()
+    clearInterval(this._interval)
   }
 }
