@@ -54,7 +54,6 @@ Given('the current hour is {int}', function (hour) {
             datetime: date.toISOString(),
         },
     };
-    console.log(fakeResponse);
     this.getStubSandbox = sinon.createSandbox();
     this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
 });

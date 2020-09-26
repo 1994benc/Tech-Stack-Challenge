@@ -31,6 +31,7 @@ export class DisplayTime {
         const timeString = this.createTimeString(currentDateTime)
         this._displayMessage = timeString
         this._displayMode = this._switchDisplayMode(currentDateTime)
+        this._changeDisplayStyle(this._displayMode)
       },
       (error) => {
         const errorMessage = this.createErrorMessage()
@@ -62,6 +63,29 @@ export class DisplayTime {
     } else {
       // the default display mode is "day"
       return 'day'
+    }
+  }
+
+  private _changeDisplayStyle(mode: 'day' | 'night'): void {
+    if (mode === 'night') {
+      document.documentElement.style.setProperty(
+        `--background-color`,
+        'var(--night-background-color)',
+      )
+      document.documentElement.style.setProperty(
+        `--text-color`,
+        'var(--night-text-color)',
+      )
+    } else {
+      // the default display mode is "day"
+      document.documentElement.style.setProperty(
+        `--background-color`,
+        'var(--day-background-color)',
+      )
+      document.documentElement.style.setProperty(
+        `--text-color`,
+        'var(--day-text-color)',
+      )
     }
   }
 
