@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
 import * as moment from 'moment'
-import { from, Observable } from 'rxjs'
+import { from, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 export class DisplayTime {
   private _displayMessage: string
-  rxSub: Observable<AxiosResponse<any>>
+  rxSub: Subscription
 
   public get displayMessage(): string {
     return this._displayMessage
@@ -17,8 +17,8 @@ export class DisplayTime {
 
   public fetchCurrentTime(): void {
     const APIPath = 'http://worldtimeapi.org/api/ip'
-    this.rxSub = from(axios.get(APIPath))
-    this.rxSub.subscribe(
+    const observable = from(axios.get(APIPath))
+    this.rxSub = observable.subscribe(
       (response) => {
         const timeString = this.createTimeString(
           new Date(response.data.datetime),
@@ -42,5 +42,7 @@ export class DisplayTime {
 
   public automaticReload(): void {}
 
-  detached() {}
+  detached() {
+    this.rxSub.unsubscribe()
+  }
 }
