@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,50 +34,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var display_time_1 = require("../../src/display-time/display-time");
-var assert = require("assert");
-var _a = require('@cucumber/cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
-var sinon = require("sinon");
-var FakeTimers = require('@sinonjs/fake-timers');
-/** ----------------------------
- * ---------STEP--DEFINITIONS---
- * -----------------------------*/
-Given('The website has already been loaded', function () {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    this.countSandbox = sinon.createSandbox();
-                    this.clock = FakeTimers.install();
-                    this.displayTime = new display_time_1.DisplayTime();
-                    this.getSpy = this.countSandbox.spy(this.displayTime, 'fetchCurrentTime');
-                    return [4 /*yield*/, this.displayTime.attached()];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "../../src/display-time/display-time", "assert", "sinon"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var display_time_1 = require("../../src/display-time/display-time");
+    var assert = require("assert");
+    var _a = require('@cucumber/cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
+    var sinon = require("sinon");
+    var FakeTimers = require('@sinonjs/fake-timers');
+    /** ----------------------------
+     * ---------STEP--DEFINITIONS---
+     * -----------------------------*/
+    Given('The website has already been loaded', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.countSandbox = sinon.createSandbox();
+                        this.clock = FakeTimers.install();
+                        this.displayTime = new display_time_1.DisplayTime();
+                        this.getSpy = this.countSandbox.spy(this.displayTime, 'fetchCurrentTime');
+                        return [4 /*yield*/, this.displayTime.attached()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
     });
-});
-When('{int} seconds have passed since the initial page load', function (second) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            this.clock.tick(second * 1000);
-            this.clock.uninstall();
-            return [2 /*return*/];
+    When('{int} seconds have passed since the initial page load', function (second) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.clock.tick(second * 1000);
+                this.clock.uninstall();
+                return [2 /*return*/];
+            });
         });
     });
-});
-Then('The time or the error message should have been updated {int} times', function (expectedCount) {
-    // Count the number of function calls
-    assert.strictEqual(this.getSpy.callCount, expectedCount);
-});
-After(function () {
-    if (this.countSandbox) {
-        this.countSandbox.restore();
-    }
-    if (this.displayTime) {
-        this.displayTime.detached();
-    }
+    Then('The time or the error message should have been updated {int} times', function (expectedCount) {
+        // Count the number of function calls
+        assert.strictEqual(this.getSpy.callCount, expectedCount);
+    });
+    After(function () {
+        if (this.countSandbox) {
+            this.countSandbox.restore();
+        }
+        if (this.displayTime) {
+            this.displayTime.detached();
+        }
+    });
 });

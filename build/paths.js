@@ -16,5 +16,6 @@ module.exports = {
   dtsSrc: [
     './typings/**/*.d.ts',
     './custom_typings/**/*.d.ts'
-  ]
+  ],
+  cucumberStepDefs: 'features/step_definitions/'
 }
