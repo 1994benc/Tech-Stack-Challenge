@@ -3,7 +3,6 @@ var ts = require('gulp-typescript');
 var paths = require('../paths');
 
 gulp.task('compileCucumber', function () {
-  console.log(paths)
   return gulp.src(paths.cucumberStepDefs+"*.ts")
     .pipe(ts({
       noImplicitAny: true,
