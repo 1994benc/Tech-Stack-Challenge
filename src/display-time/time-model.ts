@@ -28,12 +28,9 @@ export class Time {
       }),
     )
   }
-
   private _createTimeString(dateObject: Date): string {
     return moment(dateObject).format('HH:mm:ss')
   }
-
-
   private _switchDisplayMode(time: Date): 'night' | 'day' {
     const hour: number = time.getHours()
     if (hour < 6 || hour >= 18) {
