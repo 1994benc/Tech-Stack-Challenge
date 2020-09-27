@@ -1,6 +1,6 @@
-import { DisplayTime } from '../../src/display-time/display-time'
+import { DisplayTime } from '../../../../src/display-time/display-time'
 import * as assert from 'assert'
-const { Given, When, Then, After } = require('@cucumber/cucumber')
+const { Given, When, Then, After } = require('cucumber')
 import * as sinon from 'sinon'
 var FakeTimers = require('@sinonjs/fake-timers')
 

@@ -40,52 +40,65 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../../src/display-time/display-time", "assert", "sinon"], factory);
+        define(["require", "exports", "assert", "axios", "sinon", "../../../../src/display-time/display-time"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var display_time_1 = require("../../src/display-time/display-time");
     var assert = require("assert");
-    var _a = require('@cucumber/cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
+    var _a = require('cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
+    var axios_1 = require("axios");
     var sinon = require("sinon");
-    var FakeTimers = require('@sinonjs/fake-timers');
+    var display_time_1 = require("../../../../src/display-time/display-time");
     /** ----------------------------
      * ---------STEP--DEFINITIONS---
      * -----------------------------*/
-    Given('The website has already been loaded', function () {
+    Given('There is no error loading the current time', function () {
+        var fakeResponse = {
+            data: {
+                abbreviation: 'BST',
+                client_ip: '000.00.000.00',
+                datetime: '2020-09-24T10:23:10.331886+01:00',
+            },
+        };
+        this.getStubSandbox = sinon.createSandbox();
+        this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
+    });
+    When('A user loads the website', function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.countSandbox = sinon.createSandbox();
-                        this.clock = FakeTimers.install();
                         this.displayTime = new display_time_1.DisplayTime();
-                        this.getSpy = this.countSandbox.spy(this.displayTime, 'fetchCurrentTime');
                         return [4 /*yield*/, this.displayTime.attached()];
                     case 1:
                         _a.sent();
+                        this.displayMessage = this.displayTime.displayMessage;
                         return [2 /*return*/];
                 }
             });
         });
     });
-    When('{int} seconds have passed since the initial page load', function (second) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this.clock.tick(second * 1000);
-                this.clock.uninstall();
-                return [2 /*return*/];
-            });
-        });
+    Then('The current time is displayed', function () {
+        var actualCurrentTime = '10:23:10';
+        this.getStubSandbox.restore();
+        return assert.strictEqual(actualCurrentTime, this.displayMessage);
     });
-    Then('The time or the error message should have been updated {int} times', function (expectedCount) {
-        // Count the number of function calls
-        assert.strictEqual(this.getSpy.callCount, expectedCount);
+    Given('There is an error loading the current time', function () {
+        // Stub an error
+        this.getStubSandbox = sinon.createSandbox();
+        this.getStubSandbox
+            .stub(axios_1.default, 'get')
+            .rejects({ errorCode: 404, message: 'Something went wrong' });
+    });
+    Then('The error message is displayed', function () {
+        var actualErrorMessage = 'Error - back soon!';
+        this.getStubSandbox.restore();
+        return assert.strictEqual(actualErrorMessage, this.displayMessage);
     });
     After(function () {
-        if (this.countSandbox) {
-            this.countSandbox.restore();
+        if (this.getStubSandbox) {
+            this.getStubSandbox.restore();
         }
         if (this.displayTime) {
             this.displayTime.detached();
