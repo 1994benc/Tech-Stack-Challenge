@@ -4,7 +4,7 @@
 
 To run the app, follow these steps.
 
-1. Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the build tooling runs.
+1. Ensure that [NodeJS](http://nodejs.org/) < version 12 is installed. This provides the platform on which the build tooling runs. Note that node version 12+ does not work with gulp@3.9.1
 2. From the project folder, execute the following command:
 
   ```shell
