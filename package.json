@@ -22,7 +22,7 @@
   },
   "scripts": {
     "prepublish": "typings install",
-    "test": "tsc -t es5 features/**/*.ts && cucumber-js",
+    "test": "tsc -t es5 features/step_definitions/*.ts && cucumber-js",
     "e2e": "gulp serve e2e"
   },
   "devDependencies": {
