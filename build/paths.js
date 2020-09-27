@@ -17,5 +17,6 @@ module.exports = {
     './typings/**/*.d.ts',
     './custom_typings/**/*.d.ts'
   ],
-  cucumberStepDefs: 'features/step_definitions/'
+  cucumberStepDefs: 'test/cucumber/features/step_definitions/',
+  cucumberFeatures: 'test/cucumber/features/'
 }
