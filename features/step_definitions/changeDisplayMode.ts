@@ -21,7 +21,7 @@ Given('the current hour is {int}', function (hour:number) {
   this.getStubSandbox.stub(axios, 'get').resolves(fakeResponse)
 })
 
-When('the time now is loaded', async function () {
+When('the current time is loaded', async function () {
   this.displayTime = new DisplayTime()
   await this.displayTime.attached()
 })

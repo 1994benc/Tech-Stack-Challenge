@@ -57,7 +57,7 @@ Given('the current hour is {int}', function (hour) {
     this.getStubSandbox = sinon.createSandbox();
     this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
 });
-When('the time now is loaded', function () {
+When('the current time is loaded', function () {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

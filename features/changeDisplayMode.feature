@@ -4,7 +4,7 @@ Feature: Change the display mode
 
   Scenario Outline: it is now in the evening
     Given the current hour is <hour>
-    When the time now is loaded
+    When the current time is loaded
     Then the website's display mode is switched to the "<mode>" mode
 
     Examples:
@@ -17,3 +17,6 @@ Feature: Change the display mode
       | 11   | day   |
       | 6    | day   |
       | 5    | night |
+      | 1    | night |
+      | 8    | day   |
+      | 10   | day   |
