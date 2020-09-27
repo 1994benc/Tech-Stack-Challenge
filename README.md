@@ -1,4 +1,4 @@
-# aurelia-skeleton-navigation (typescript)
+# Cedus Tech Stack Challenge (typescript)
 
 ## Running The App
 
