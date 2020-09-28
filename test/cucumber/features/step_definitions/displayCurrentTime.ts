@@ -43,6 +43,7 @@ Then('The error message is displayed', function () {
   const actualErrorMessage = 'Error - back soon!'
   this.getStubSandbox.restore()
   return assert.strictEqual(actualErrorMessage, this.displayMessage)
+
 })
 
 After(function () {

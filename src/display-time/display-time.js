@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,91 +34,102 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DisplayTime = void 0;
-var time_model_1 = require("./time-model");
-var DisplayTime = /** @class */ (function () {
-    function DisplayTime() {
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
     }
-    Object.defineProperty(DisplayTime.prototype, "displayMessage", {
-        // Getters
-        get: function () {
-            return this._displayMessage;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(DisplayTime.prototype, "displayMode", {
-        get: function () {
-            return this._displayMode;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    // Aurelia lifecycle method: attached
-    DisplayTime.prototype.attached = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: 
-                    // Fetch the current time from the API
-                    return [4 /*yield*/, this.fetchCurrentTime()
-                        // Sends request to get the current time every 10 seconds
-                    ];
-                    case 1:
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "./time-model"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.DisplayTime = void 0;
+    var time_model_1 = require("./time-model");
+    var DisplayTime = /** @class */ (function () {
+        function DisplayTime() {
+        }
+        Object.defineProperty(DisplayTime.prototype, "displayMessage", {
+            // Getters
+            get: function () {
+                return this._displayMessage;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(DisplayTime.prototype, "displayMode", {
+            get: function () {
+                return this._displayMode;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        // Aurelia lifecycle method: attached
+        DisplayTime.prototype.attached = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: 
                         // Fetch the current time from the API
-                        _a.sent();
-                        // Sends request to get the current time every 10 seconds
-                        this.automaticReload();
-                        return [2 /*return*/];
-                }
+                        return [4 /*yield*/, this.fetchCurrentTime()
+                            // Sends request to get the current time every 10 seconds
+                        ];
+                        case 1:
+                            // Fetch the current time from the API
+                            _a.sent();
+                            // Sends request to get the current time every 10 seconds
+                            this.automaticReload();
+                            return [2 /*return*/];
+                    }
+                });
             });
-        });
-    };
-    // Fetch the current time from the API
-    DisplayTime.prototype.fetchCurrentTime = function () {
-        var _this = this;
-        var time = new time_model_1.Time();
-        var timeObservable = time.current();
-        this._rxSub = timeObservable.subscribe(function (response) {
-            _this._displayMessage = response.timeString;
-            _this._displayMode = response.displayMode;
-            _this._changeDisplayStyle(_this._displayMode);
-        }, function (error) {
-            _this._displayMessage = _this._createErrorMessage();
-        });
-    };
-    DisplayTime.prototype._createErrorMessage = function () {
-        return 'Error - back soon!';
-    };
-    // Sends request to get the current time every 10 seconds
-    DisplayTime.prototype.automaticReload = function () {
-        var _this = this;
-        var seconds = 10;
-        this._interval = setInterval(function () {
-            _this.fetchCurrentTime();
-        }, seconds * 1000);
-    };
-    DisplayTime.prototype._changeDisplayStyle = function (mode) {
-        // Check if the code is running in the browser environment
-        if (typeof document === 'undefined') {
-            return;
-        }
-        // Change the html's styles according to the display mode
-        if (mode === 'night') {
-            document.documentElement.style.setProperty("--background-color", 'var(--night-background-color)');
-            document.documentElement.style.setProperty("--text-color", 'var(--night-text-color)');
-        }
-        else {
-            // the default display mode is "day"
-            document.documentElement.style.setProperty("--background-color", 'var(--day-background-color)');
-            document.documentElement.style.setProperty("--text-color", 'var(--day-text-color)');
-        }
-    };
-    DisplayTime.prototype.detached = function () {
-        this._rxSub.unsubscribe();
-        clearInterval(this._interval);
-    };
-    return DisplayTime;
-}());
-exports.DisplayTime = DisplayTime;
+        };
+        // Fetch the current time from the API
+        DisplayTime.prototype.fetchCurrentTime = function () {
+            var _this = this;
+            var time = new time_model_1.Time();
+            var timeObservable = time.current();
+            this._rxSub = timeObservable.subscribe(function (response) {
+                _this._displayMessage = response.timeString;
+                _this._displayMode = response.displayMode;
+                _this._changeDisplayStyle(_this._displayMode);
+            }, function (error) {
+                _this._displayMessage = _this._createErrorMessage();
+            });
+        };
+        DisplayTime.prototype._createErrorMessage = function () {
+            return 'Error - back soon!';
+        };
+        // Sends request to get the current time every 10 seconds
+        DisplayTime.prototype.automaticReload = function () {
+            var _this = this;
+            var seconds = 10;
+            this._interval = setInterval(function () {
+                _this.fetchCurrentTime();
+            }, seconds * 1000);
+        };
+        DisplayTime.prototype._changeDisplayStyle = function (mode) {
+            // Check if the code is running in the browser environment
+            if (typeof document === 'undefined') {
+                return;
+            }
+            // Change the html's styles according to the display mode
+            if (mode === 'night') {
+                document.documentElement.style.setProperty("--background-color", 'var(--night-background-color)');
+                document.documentElement.style.setProperty("--text-color", 'var(--night-text-color)');
+            }
+            else {
+                // the default display mode is "day"
+                document.documentElement.style.setProperty("--background-color", 'var(--day-background-color)');
+                document.documentElement.style.setProperty("--text-color", 'var(--day-text-color)');
+            }
+        };
+        DisplayTime.prototype.detached = function () {
+            this._rxSub.unsubscribe();
+            clearInterval(this._interval);
+        };
+        return DisplayTime;
+    }());
+    exports.DisplayTime = DisplayTime;
+});
