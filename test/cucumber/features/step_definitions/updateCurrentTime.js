@@ -40,12 +40,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../../../../src/display-time/display-time", "assert", "sinon"], factory);
+        define(["require", "exports", "../../../../dist/display-time/display-time", "assert", "sinon"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var display_time_1 = require("../../../../src/display-time/display-time");
+    var display_time_1 = require("../../../../dist/display-time/display-time");
     var assert = require("assert");
     var _a = require('cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
     var sinon = require("sinon");

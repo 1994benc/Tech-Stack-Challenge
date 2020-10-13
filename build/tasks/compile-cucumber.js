@@ -9,7 +9,7 @@ gulp.task('compileComponents', function () {
     // outFile: 'output.js',
     target: "ES5",
     module: "umd"
-  })).pipe(gulp.dest(paths.root))
+  })).pipe(gulp.dest(paths.output))
 })
 
 gulp.task('compileCucumber', ['compileComponents'], function () {

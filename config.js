@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -13,6 +14,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "@types/axios": "npm:@types/axios@0.14.0",
     "@types/moment": "npm:@types/moment@2.13.0",
