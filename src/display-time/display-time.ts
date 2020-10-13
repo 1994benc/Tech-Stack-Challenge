@@ -1,7 +1,6 @@
-import { Observable, Subject, Subscription } from 'rxjs'
+import { Subject, Subscription } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { TimeData } from './time-data'
-import { Time } from './time-model'
 
 export class DisplayTime {
   // Properties
