@@ -32,6 +32,7 @@ System.config({
     "axios": "npm:axios@0.20.0",
     "bluebird": "npm:bluebird@3.4.1",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
+    "css": "npm:jspm-loader-css-modules@1.0.1-beta1",
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@2.2.4",
@@ -238,8 +239,33 @@ System.config({
       "base64-js": "npm:base64-js@1.3.1",
       "ieee754": "npm:ieee754@1.1.13"
     },
+    "npm:chalk@1.1.3": {
+      "ansi-styles": "npm:ansi-styles@2.2.1",
+      "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
+      "has-ansi": "npm:has-ansi@2.0.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "strip-ansi": "npm:strip-ansi@3.0.1",
+      "supports-color": "npm:supports-color@2.0.0"
+    },
     "npm:core-util-is@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1"
+    },
+    "npm:css-modules-loader-core@1.1.0": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "icss-replace-symbols": "npm:icss-replace-symbols@1.1.0",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "postcss": "npm:postcss@6.0.1",
+      "postcss-modules-extract-imports": "npm:postcss-modules-extract-imports@1.1.0",
+      "postcss-modules-local-by-default": "npm:postcss-modules-local-by-default@1.2.0",
+      "postcss-modules-scope": "npm:postcss-modules-scope@1.1.0",
+      "postcss-modules-values": "npm:postcss-modules-values@1.3.0"
+    },
+    "npm:css-selector-tokenizer@0.7.3": {
+      "cssesc": "npm:cssesc@3.0.0",
+      "fastparse": "npm:fastparse@1.1.2"
+    },
+    "npm:fastparse@1.1.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:follow-redirects@1.13.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -252,6 +278,12 @@ System.config({
     "npm:font-awesome@4.6.3": {
       "css": "github:systemjs/plugin-css@0.1.31"
     },
+    "npm:has-ansi@2.0.0": {
+      "ansi-regex": "npm:ansi-regex@2.1.1"
+    },
+    "npm:has-flag@1.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:https-browserify@0.0.0": {
       "http": "github:jspm/nodelibs-http@1.7.1"
     },
@@ -261,12 +293,50 @@ System.config({
     "npm:inherits@2.0.4": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "npm:jspm-loader-css-modules@1.0.1-beta1": {
+      "jspm-loader-css": "npm:jspm-loader-css@1.0.1-beta1"
+    },
+    "npm:jspm-loader-css@1.0.1-beta1": {
+      "css-modules-loader-core": "npm:css-modules-loader-core@1.1.0",
+      "debounce": "npm:debounce@1.2.0",
+      "path": "npm:path@0.12.7",
+      "toposort": "npm:toposort@0.2.12"
+    },
     "npm:pako@0.2.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:path@0.12.7": {
+      "process": "npm:process@0.11.10",
+      "util": "npm:util@0.10.3"
+    },
+    "npm:postcss-modules-extract-imports@1.1.0": {
+      "postcss": "npm:postcss@6.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:postcss-modules-local-by-default@1.2.0": {
+      "css-selector-tokenizer": "npm:css-selector-tokenizer@0.7.3",
+      "postcss": "npm:postcss@6.0.1"
+    },
+    "npm:postcss-modules-scope@1.1.0": {
+      "css-selector-tokenizer": "npm:css-selector-tokenizer@0.7.3",
+      "postcss": "npm:postcss@6.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:postcss-modules-values@1.3.0": {
+      "icss-replace-symbols": "npm:icss-replace-symbols@1.1.0",
+      "postcss": "npm:postcss@6.0.1"
+    },
+    "npm:postcss@6.0.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "chalk": "npm:chalk@1.1.3",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "source-map": "npm:source-map@0.5.7",
+      "supports-color": "npm:supports-color@3.2.3"
     },
     "npm:process-nextick-args@2.0.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
@@ -310,6 +380,9 @@ System.config({
     "npm:safe-buffer@5.1.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1"
     },
+    "npm:source-map@0.5.7": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:stream-browserify@1.0.0": {
       "events": "github:jspm/nodelibs-events@0.1.1",
       "inherits": "npm:inherits@2.0.4",
@@ -321,6 +394,20 @@ System.config({
     "npm:string_decoder@1.1.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "safe-buffer": "npm:safe-buffer@5.1.2"
+    },
+    "npm:strip-ansi@3.0.1": {
+      "ansi-regex": "npm:ansi-regex@2.1.1"
+    },
+    "npm:supports-color@2.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:supports-color@3.2.3": {
+      "has-flag": "npm:has-flag@1.0.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:toposort@0.2.12": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

@@ -1,6 +1,7 @@
 import { Subject, Subscription } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { TimeData } from './time-data'
+import styles from './styles.css!'
 
 export class DisplayTime {
   // Properties
@@ -23,6 +24,7 @@ export class DisplayTime {
     await this.fetchCurrentTime()
     // Sends request to get the current time every 10 seconds
     this.automaticReload()
+    console.log(styles)
   }
 
   // Fetch the current time from the API
@@ -37,7 +39,8 @@ export class DisplayTime {
           this._displayMode = response.displayMode
           this._changeDisplayStyle(this._displayMode)
         },
-        () => {
+        (err) => {
+          console.log(err)
           this._displayMessage = this._createErrorMessage()
         },
       )

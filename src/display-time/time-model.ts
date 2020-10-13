@@ -1,6 +1,4 @@
-import moment = require('moment')
-import { from, Observable, of } from 'rxjs'
-import { catchError, map } from 'rxjs/operators'
+import moment from 'moment';
 
 export class Time {
   private _timeNow: Date
