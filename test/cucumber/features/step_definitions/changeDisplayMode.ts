@@ -2,7 +2,7 @@ import * as assert from 'assert'
 const { Given, When, Then, After } = require('cucumber')
 import axios from 'axios'
 import * as sinon from 'sinon'
-import { DisplayTime } from '../../../../src/display-time/display-time'
+import { DisplayTime } from '../../../../dist/display-time/display-time'
 /** ----------------------------
  * ---------STEP--DEFINITIONS---
  * -----------------------------*/
@@ -33,5 +33,7 @@ Then("the website's display mode is switched to the {string} mode", function (
 })
 
 After(function () {
-  this.displayTime.detached()
+  if (this.displayTime) {
+    this.displayTime.detached()
+  }
 })
