@@ -1,11 +1,12 @@
 System.config({
   defaultJSExtensions: true,
-  transpiler: false,
+  transpiler: "plugin-babel",
   paths: {
     "*": "dist/*",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -13,6 +14,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "@types/axios": "npm:@types/axios@0.14.0",
     "@types/moment": "npm:@types/moment@2.13.0",
@@ -37,7 +39,10 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@2.2.4",
     "moment": "npm:moment@2.29.0",
+    "plugin-babel": "npm:systemjs-plugin-babel@0.0.25/plugin-babel.js",
     "rxjs": "npm:rxjs@6.6.3",
+    "systemjs-babel-build": "npm:systemjs-plugin-babel@0.0.25/systemjs-babel-browser.js",
+    "systemjs-plugin-babel": "npm:systemjs-plugin-babel@0.0.25",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.5.0"

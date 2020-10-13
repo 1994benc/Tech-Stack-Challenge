@@ -101,6 +101,7 @@
       "jquery": "npm:jquery@^2.2.4",
       "moment": "npm:moment@^2.29.0",
       "rxjs": "npm:rxjs@^6.6.3",
+      "systemjs-plugin-babel": "npm:systemjs-plugin-babel@^0.0.25",
       "text": "github:systemjs/plugin-text@^0.0.8"
     },
     "devDependencies": {}
