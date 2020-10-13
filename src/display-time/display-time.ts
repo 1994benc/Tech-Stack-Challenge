@@ -1,5 +1,5 @@
-import * as moment from 'moment'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
+import { TimeData } from './time-data'
 import { Time } from './time-model'
 
 export class DisplayTime {
@@ -17,7 +17,6 @@ export class DisplayTime {
     return this._displayMode
   }
 
-  // Aurelia lifecycle method: attached
   async attached() {
     // Fetch the current time from the API
     await this.fetchCurrentTime()
@@ -27,15 +26,15 @@ export class DisplayTime {
 
   // Fetch the current time from the API
   public fetchCurrentTime(): void {
-    const time = new Time()
-    const timeObservable = time.current()
+    const timeData = new TimeData();
+    const timeObservable: Observable<Time> = timeData.getTimeNow()
     this._rxSub = timeObservable.subscribe(
       (response) => {
         this._displayMessage = response.timeString
         this._displayMode = response.displayMode
         this._changeDisplayStyle(this._displayMode)
       },
-      (error) => {
+      () => {
         this._displayMessage = this._createErrorMessage()
       },
     )
@@ -55,9 +54,7 @@ export class DisplayTime {
 
   private _changeDisplayStyle(mode: 'day' | 'night'): void {
     // Check if the code is running in the browser environment
-    if (
-    typeof document === 'undefined'
-    ) {
+    if (typeof document === 'undefined') {
       return
     }
 
@@ -85,7 +82,9 @@ export class DisplayTime {
   }
 
   detached() {
-    this._rxSub.unsubscribe()
+    if (this._rxSub) {
+      this._rxSub.unsubscribe()
+    }
     clearInterval(this._interval)
   }
 }

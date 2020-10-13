@@ -1,4 +1,3 @@
-import axios, { AxiosError, AxiosResponse } from 'axios'
 import moment = require('moment')
 import { from, Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
@@ -23,7 +22,7 @@ export class Time {
     return this._timeString
   }
 
-  get displayMode(): string {
+  get displayMode(): 'night' | 'day' {
     return this._displayMode
   }
 
