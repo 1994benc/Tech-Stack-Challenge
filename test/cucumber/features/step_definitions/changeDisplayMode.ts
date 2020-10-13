@@ -33,5 +33,7 @@ Then("the website's display mode is switched to the {string} mode", function (
 })
 
 After(function () {
-  this.displayTime.detached()
+  if (this.displayTime) {
+    this.displayTime.detached()
+  }
 })

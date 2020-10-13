@@ -40,15 +40,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./time-data"], factory);
+        define(["require", "exports", "rxjs", "rxjs/operators", "./time-data"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DisplayTime = void 0;
+    var rxjs_1 = require("rxjs");
+    var operators_1 = require("rxjs/operators");
     var time_data_1 = require("./time-data");
     var DisplayTime = /** @class */ (function () {
         function DisplayTime() {
+            this._subject = new rxjs_1.Subject();
         }
         Object.defineProperty(DisplayTime.prototype, "displayMessage", {
             // Getters
@@ -88,8 +91,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         DisplayTime.prototype.fetchCurrentTime = function () {
             var _this = this;
             var timeData = new time_data_1.TimeData();
-            var timeObservable = timeData.getTimeNow();
-            this._rxSub = timeObservable.subscribe(function (response) {
+            this._rxSub = timeData
+                .getTimeNow()
+                .pipe(operators_1.takeUntil(this._subject)) // This will unsubscribe the subscription when this._subject becomes true
+                .subscribe(function (response) {
                 _this._displayMessage = response.timeString;
                 _this._displayMode = response.displayMode;
                 _this._changeDisplayStyle(_this._displayMode);
@@ -105,6 +110,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
             var _this = this;
             var seconds = 10;
             this._interval = setInterval(function () {
+                if (_this._rxSub) {
+                    _this._rxSub.unsubscribe();
+                }
                 _this.fetchCurrentTime();
             }, seconds * 1000);
         };
@@ -125,10 +133,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
             }
         };
         DisplayTime.prototype.detached = function () {
-            if (this._rxSub) {
-                this._rxSub.unsubscribe();
-            }
             clearInterval(this._interval);
+            /**
+             * Unsubscribe from rxjs subscriptions by setting this._subject = true,
+             * this will trigger takeUntil to stop the observable subscriptions
+             */
+            this._subject.next(true);
         };
         return DisplayTime;
     }());

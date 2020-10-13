@@ -1,4 +1,5 @@
-import { Observable, Subscription } from 'rxjs'
+import { Observable, Subject, Subscription } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 import { TimeData } from './time-data'
 import { Time } from './time-model'
 
@@ -6,8 +7,9 @@ export class DisplayTime {
   // Properties
   private _displayMessage: string
   private _interval: NodeJS.Timer
-  private _rxSub: Subscription
   private _displayMode: 'night' | 'day'
+  private _subject: Subject<boolean> = new Subject<boolean>()
+  private _rxSub: Subscription
 
   // Getters
   public get displayMessage(): string {
@@ -26,18 +28,20 @@ export class DisplayTime {
 
   // Fetch the current time from the API
   public fetchCurrentTime(): void {
-    const timeData = new TimeData();
-    const timeObservable: Observable<Time> = timeData.getTimeNow()
-    this._rxSub = timeObservable.subscribe(
-      (response) => {
-        this._displayMessage = response.timeString
-        this._displayMode = response.displayMode
-        this._changeDisplayStyle(this._displayMode)
-      },
-      () => {
-        this._displayMessage = this._createErrorMessage()
-      },
-    )
+    const timeData = new TimeData()
+    this._rxSub = timeData
+      .getTimeNow()
+      .pipe(takeUntil(this._subject)) // This will unsubscribe the subscription when this._subject becomes true
+      .subscribe(
+        (response) => {
+          this._displayMessage = response.timeString
+          this._displayMode = response.displayMode
+          this._changeDisplayStyle(this._displayMode)
+        },
+        () => {
+          this._displayMessage = this._createErrorMessage()
+        },
+      )
   }
 
   private _createErrorMessage(): string {
@@ -48,6 +52,9 @@ export class DisplayTime {
   public automaticReload(): void {
     const seconds = 10
     this._interval = setInterval(() => {
+      if (this._rxSub) {
+        this._rxSub.unsubscribe()
+      }
       this.fetchCurrentTime()
     }, seconds * 1000)
   }
@@ -82,9 +89,11 @@ export class DisplayTime {
   }
 
   detached() {
-    if (this._rxSub) {
-      this._rxSub.unsubscribe()
-    }
     clearInterval(this._interval)
+    /**
+     * Unsubscribe from rxjs subscriptions by setting this._subject = true,
+     * this will trigger takeUntil to stop the observable subscriptions
+     */
+    this._subject.next(true)
   }
 }

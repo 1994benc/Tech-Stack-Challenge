@@ -84,6 +84,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         assert.strictEqual(this.displayTime.displayMode, mode);
     });
     After(function () {
-        this.displayTime.detached();
+        if (this.displayTime) {
+            this.displayTime.detached();
+        }
     });
 });
