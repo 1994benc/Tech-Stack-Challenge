@@ -52,6 +52,7 @@ export class DisplayTime {
   public automaticReload(): void {
     const seconds = 10
     this._interval = setInterval(() => {
+      // Unsubscribe to the previous subscription before creating a new one
       if (this._rxSub) {
         this._rxSub.unsubscribe()
       }
@@ -61,6 +62,7 @@ export class DisplayTime {
 
   private _changeDisplayStyle(mode: 'day' | 'night'): void {
     // Check if the code is running in the browser environment
+    // So that Cucumber tests will not fail because of the undefined document object
     if (typeof document === 'undefined') {
       return
     }
