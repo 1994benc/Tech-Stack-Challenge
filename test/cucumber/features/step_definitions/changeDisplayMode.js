@@ -51,11 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     var TimeModel_1 = require("../../../../dist/displayTime/TimeModel");
     var TimeProvider_1 = require("../../../../dist/displayTime/TimeProvider");
     var DisplayTimeComponent_1 = require("../../../../dist/displayTime/DisplayTimeComponent");
-    /** ----------------------------
-     * ---------STEP--DEFINITIONS---
-     * -----------------------------*/
     Given('the current hour is {int}', function (hour) {
-        // let date = new Date(`2020-09-24T00:00:00.331886+01:00`)
         this.getStubSandbox = sinon.createSandbox();
         this.timeProvider = new TimeProvider_1.TimeProvider();
         var date = new Date();
