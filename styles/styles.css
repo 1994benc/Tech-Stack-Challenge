@@ -8,11 +8,16 @@
   --text-color: var(--day-text-color);
 }
 
-html {
-  background-color: var(--background-color);
-  color: var(--text-color);
+
+.light {
+  background: #ffffff;
+  color:black;
 }
 
+.dark {
+  background: #0b071b;
+  color:white;
+}
 
 body {
   margin: 0;

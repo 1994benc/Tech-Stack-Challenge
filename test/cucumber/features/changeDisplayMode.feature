@@ -5,7 +5,7 @@ Feature: Change the display mode
   Scenario Outline: it is now in the evening
     Given the current hour is <hour>
     When the current time is loaded
-    Then the website's display mode is switched to the "<mode>" mode
+    Then the website's display mode should be switched to the "<mode>" mode
 
     Examples:
       | hour | mode  |

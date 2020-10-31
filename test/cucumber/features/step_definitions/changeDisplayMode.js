@@ -40,38 +40,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "assert", "axios", "sinon", "../../../../dist/display-time/display-time"], factory);
+        define(["require", "exports", "assert", "sinon", "../../../../dist/displayTime/TimeModel", "../../../../dist/displayTime/TimeProvider", "../../../../dist/displayTime/DisplayTimeComponent"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var assert = require("assert");
     var _a = require('cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
-    var axios_1 = require("axios");
     var sinon = require("sinon");
-    var display_time_1 = require("../../../../dist/display-time/display-time");
+    var TimeModel_1 = require("../../../../dist/displayTime/TimeModel");
+    var TimeProvider_1 = require("../../../../dist/displayTime/TimeProvider");
+    var DisplayTimeComponent_1 = require("../../../../dist/displayTime/DisplayTimeComponent");
     /** ----------------------------
      * ---------STEP--DEFINITIONS---
      * -----------------------------*/
     Given('the current hour is {int}', function (hour) {
-        var date = new Date("2020-09-24T00:00:00.331886+01:00");
-        date.setHours(hour);
-        var fakeResponse = {
-            data: {
-                abbreviation: 'BST',
-                client_ip: '000.00.000.00',
-                datetime: date.toISOString(),
-            },
-        };
+        // let date = new Date(`2020-09-24T00:00:00.331886+01:00`)
         this.getStubSandbox = sinon.createSandbox();
-        this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
+        this.timeProvider = new TimeProvider_1.TimeProvider();
+        var date = new Date();
+        date.setHours(hour);
+        this.getStubSandbox
+            .stub(this.timeProvider, 'getTime')
+            .resolves(new TimeModel_1.TimeModel(date));
     });
     When('the current time is loaded', function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.displayTime = new display_time_1.DisplayTime();
+                        this.displayTime = new DisplayTimeComponent_1.DisplayTimeComponent(this.timeProvider);
                         return [4 /*yield*/, this.displayTime.attached()];
                     case 1:
                         _a.sent();
@@ -80,8 +78,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
             });
         });
     });
-    Then("the website's display mode is switched to the {string} mode", function (mode) {
-        assert.strictEqual(this.displayTime.displayMode, mode);
+    Then("the website's display mode should be switched to the {string} mode", function (mode) {
+        assert.strictEqual(this.displayTime.isDayLight, mode === 'day');
     });
     After(function () {
         if (this.displayTime) {

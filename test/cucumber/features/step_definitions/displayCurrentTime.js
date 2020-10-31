@@ -40,36 +40,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "assert", "axios", "sinon", "../../../../dist/display-time/display-time"], factory);
+        define(["require", "exports", "assert", "sinon", "../../../../dist/displayTime/TimeModel", "../../../../dist/displayTime/TimeProvider", "../../../../dist/displayTime/DisplayTimeComponent"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var assert = require("assert");
     var _a = require('cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
-    var axios_1 = require("axios");
     var sinon = require("sinon");
-    var display_time_1 = require("../../../../dist/display-time/display-time");
-    /** ----------------------------
-     * ---------STEP--DEFINITIONS---
-     * -----------------------------*/
+    var TimeModel_1 = require("../../../../dist/displayTime/TimeModel");
+    var TimeProvider_1 = require("../../../../dist/displayTime/TimeProvider");
+    var DisplayTimeComponent_1 = require("../../../../dist/displayTime/DisplayTimeComponent");
+    //  Actual current time 
+    var EXPECTED_TIME_ISO = '2020-09-24T10:23:10.331886+01:00';
+    var EXPECTED_TIME_DISPLAY = '10:23:10';
+    var EXPECTED_ERROR_MESSAGE = 'Error - back soon!';
     Given('There is no error loading the current time', function () {
-        var fakeResponse = {
-            data: {
-                abbreviation: 'BST',
-                client_ip: '000.00.000.00',
-                datetime: '2020-09-24T10:23:10.331886+01:00',
-            },
-        };
         this.getStubSandbox = sinon.createSandbox();
-        this.getStubSandbox.stub(axios_1.default, 'get').resolves(fakeResponse);
+        this.timeProvider = new TimeProvider_1.TimeProvider();
+        this.getStubSandbox
+            .stub(this.timeProvider, 'getTime')
+            .resolves(new TimeModel_1.TimeModel(new Date(EXPECTED_TIME_ISO)));
     });
     When('A user loads the website', function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.displayTime = new display_time_1.DisplayTime();
+                        this.displayTime = new DisplayTimeComponent_1.DisplayTimeComponent(this.timeProvider);
                         return [4 /*yield*/, this.displayTime.attached()];
                     case 1:
                         _a.sent();
@@ -79,22 +77,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
             });
         });
     });
-    Then('The current time is displayed', function () {
-        var actualCurrentTime = '10:23:10';
+    Then('The current time should be displayed', function () {
         this.getStubSandbox.restore();
-        return assert.strictEqual(actualCurrentTime, this.displayMessage);
+        return assert.strictEqual(this.displayMessage, EXPECTED_TIME_DISPLAY);
     });
     Given('There is an error loading the current time', function () {
         // Stub an error
+        this.timeProvider = new TimeProvider_1.TimeProvider();
         this.getStubSandbox = sinon.createSandbox();
         this.getStubSandbox
-            .stub(axios_1.default, 'get')
+            .stub(this.timeProvider, 'getTime')
             .rejects({ errorCode: 404, message: 'Something went wrong' });
     });
-    Then('The error message is displayed', function () {
-        var actualErrorMessage = 'Error - back soon!';
+    Then('The error message should be displayed', function () {
         this.getStubSandbox.restore();
-        return assert.strictEqual(actualErrorMessage, this.displayMessage);
+        return assert.strictEqual(this.displayMessage, EXPECTED_ERROR_MESSAGE);
     });
     After(function () {
         if (this.getStubSandbox) {

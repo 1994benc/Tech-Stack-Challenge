@@ -1,6 +1,6 @@
 import moment = require('moment')
 
-export class Time {
+export class TimeModel {
   private _timeNow: Date
   private _timeString: string
   private _displayMode: 'night' | 'day'

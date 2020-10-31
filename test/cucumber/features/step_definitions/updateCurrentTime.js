@@ -40,15 +40,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../../../../dist/display-time/display-time", "assert", "sinon"], factory);
+        define(["require", "exports", "../../../../dist/displayTime/DisplayTimeComponent", "assert", "sinon", "../../../../dist/displayTime/TimeProvider"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var display_time_1 = require("../../../../dist/display-time/display-time");
+    var DisplayTimeComponent_1 = require("../../../../dist/displayTime/DisplayTimeComponent");
     var assert = require("assert");
     var _a = require('cucumber'), Given = _a.Given, When = _a.When, Then = _a.Then, After = _a.After;
     var sinon = require("sinon");
+    var TimeProvider_1 = require("../../../../dist/displayTime/TimeProvider");
     var FakeTimers = require('@sinonjs/fake-timers');
     /** ----------------------------
      * ---------STEP--DEFINITIONS---
@@ -60,8 +61,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     case 0:
                         this.countSandbox = sinon.createSandbox();
                         this.clock = FakeTimers.install();
-                        this.displayTime = new display_time_1.DisplayTime();
-                        this.getSpy = this.countSandbox.spy(this.displayTime, 'fetchCurrentTime');
+                        this.timeProvider = new TimeProvider_1.TimeProvider();
+                        this.displayTime = new DisplayTimeComponent_1.DisplayTimeComponent(this.timeProvider);
+                        this.getSpy = this.countSandbox.spy(this.timeProvider, 'getTime');
                         return [4 /*yield*/, this.displayTime.attached()];
                     case 1:
                         _a.sent();
