@@ -1,7 +1,7 @@
 <template>
   <require from="./DisplayTimeStyles.css"></require>
-  <div class="${displayMode}">
-    <h1 class="time-display-title">The current time is</h1>
-    <div class="time-display">${displayMessage}</div>
+  <div class="${isDayLight ? styles.day : styles.night} ${styles.container}">
+    <h1>The current time is</h1>
+    <div class="${styles.message}">${displayMessage}</div>
   </div>
 </template>

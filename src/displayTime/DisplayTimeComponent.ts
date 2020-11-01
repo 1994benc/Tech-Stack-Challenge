@@ -3,13 +3,14 @@ import { Subscription } from 'rxjs';
 import { TimeModel } from './TimeModel';
 import { TimeProvider } from './TimeProvider';
 const ERROR_MESSAGE = 'Error - back soon!';
-import styles from './DisplayTimeStyles.css.json!';
+import classes from './DisplayTimeStyles.css.json!';
 
 @autoinject()
 export class DisplayTimeComponent {
   private _displayMessage: string;
   private _rxSub: Subscription;
   private _currentTime: TimeModel;
+  private _styles = classes;
 
   constructor(private _timeProvider: TimeProvider) {
     this._timeProvider = _timeProvider;
@@ -17,13 +18,18 @@ export class DisplayTimeComponent {
 
   // Getters
   @computedFrom('_currentTime')
-  public get displayMode(): boolean {
-    return this._currentTime?.displayMode === 'day' ? styles.night : styles.night;
+  public get isDayLight(): boolean {
+    return this._currentTime?.displayMode === 'day';
   }
 
   @computedFrom('_displayMessage')
   public get displayMessage(): string {
     return this._displayMessage;
+  }
+
+  @computedFrom("_styles")
+  public get styles() {
+    return this._styles;
   }
 
   // Setters
