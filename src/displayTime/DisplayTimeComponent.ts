@@ -10,7 +10,7 @@ export class DisplayTimeComponent {
   private _displayMessage: string;
   private _rxSub: Subscription;
   private _currentTime: TimeModel;
-  private _styles = classes;
+  private _styles: { [key: string]: string; } = classes;
 
   constructor(private _timeProvider: TimeProvider) {
     this._timeProvider = _timeProvider;
@@ -28,7 +28,7 @@ export class DisplayTimeComponent {
   }
 
   @computedFrom("_styles")
-  public get styles() {
+  public get styles(): { [key: string]: string; } {
     return this._styles;
   }
 
