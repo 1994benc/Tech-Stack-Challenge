@@ -8,9 +8,11 @@ gulp.task('compileComponents', function () {
     experimentalDecorators: true,
     // outFile: 'output.js',
     target: "ES5",
-    module: "umd"
-  })).pipe(gulp.dest(paths.output))
-})
+    module: "umd",
+    resolveJsonModule: true,
+
+  })).pipe(gulp.dest(paths.output));
+});
 
 gulp.task('compileCucumber', ['compileComponents'], function () {
   return gulp.src(paths.cucumberStepDefs + "*.ts")
@@ -19,7 +21,9 @@ gulp.task('compileCucumber', ['compileComponents'], function () {
       experimentalDecorators: true,
       // outFile: 'output.js',
       target: "ES5",
-      module: "umd"
+      module: "umd",
+      resolveJsonModule: true,
+
     }))
     .pipe(gulp.dest(paths.cucumberStepDefs));
 });
